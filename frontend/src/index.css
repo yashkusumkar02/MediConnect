@@ -1,0 +1,42 @@
+/* Importing fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Keyframes for blink animation */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Tailwind custom utility for blinking */
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+/* Custom warning message with blink effect */
+.warning-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  animation: blink 1s infinite;
+}
+
+/* Apply Poppins font globally */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Apply Orbitron font for specific headings */
+h1, h2, h3 {
+  font-family: 'poppins', sans-serif;
+}
+
+/* Additional customization if needed */
