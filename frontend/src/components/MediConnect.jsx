@@ -263,7 +263,7 @@ export const MediConnect = () => {
       {/* Footer Section */}
       <footer className="bg-gray-100 py-4 text-center">
         <p className="text-sm text-gray-600">
-          © 2024 MediConnect. All rights reserved. Built with 💻 by Deepak
+          © 2024 MediConnect. All rights reserved. Built with 💻 by Suyash
           Prakash Kusumkar.
         </p>
       </footer>
