@@ -248,7 +248,7 @@ const ClientSignup = () => {
           {/* Login Link */}
           <p className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-500 hover:underline">
+            <a href="/main" className="text-blue-500 hover:underline">
               Login here
             </a>
           </p>

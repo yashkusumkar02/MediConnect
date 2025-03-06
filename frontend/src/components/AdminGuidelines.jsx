@@ -1,8 +1,28 @@
-// import React from 'react';
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Navbar from "./Navbar";
 
 const AdminGuidelines = () => {
+  const navigate = useNavigate();
+  const location = useLocation(); // Get current route
+
+  useEffect(() => {
+    const type = localStorage.getItem("type");
+    console.log("User type:", type);
+
+    // Prevent unnecessary navigation if already on the correct route
+    if (type === "client" && location.pathname !== "/main") {
+      console.log("Redirecting to /main");
+      navigate("/main", { replace: true });
+    } else if (type === "hospital" && location.pathname !== "/admin-details") {
+      console.log("Redirecting to /admin-details");
+      navigate("/admin-details", { replace: true });
+    } else if (!type && location.pathname !== "/main") {
+      console.log("Redirecting to /main (default)");
+      navigate("/main", { replace: true });
+    }
+  }, [navigate, location.pathname]); // Depend on location to prevent looping
+
   return (
     <>
     <Navbar />

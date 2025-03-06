@@ -8,6 +8,7 @@ const ClientAppointments = () => {
   const [error, setError] = useState(null);
 
   const appointmentsPerPage = 10;
+  console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL_APPOINTMENT);
 
   useEffect(() => {
     const clientEmail = localStorage.getItem("clientEmail");
@@ -15,18 +16,24 @@ const ClientAppointments = () => {
     if (clientEmail) {
       axios
         .post(
-          // "http://localhost:3000/api/appointments/client-appointments"
-          `${import.meta.env.VITE_API_BASE_URL_APPOINTMENT}/client-appointments`
-
-          
-          , { email: clientEmail })
+          `${
+            import.meta.env.VITE_API_BASE_URL_APPOINTMENT
+          }/client-appointments`,
+          { email: clientEmail }
+        )
         .then((response) => {
-          const sortedAppointments = response.data.sort((a, b) => new Date(b.preferredDate) - new Date(a.preferredDate));
-          setAppointments(sortedAppointments);
+          if (response.data.length === 0) {
+            setError("No appointments found.");
+          } else {
+            const sortedAppointments = response.data.sort(
+              (a, b) => new Date(b.preferredDate) - new Date(a.preferredDate)
+            );
+            setAppointments(sortedAppointments);
+          }
         })
         .catch((error) => {
-          setError("Error fetching appointments. Please try again later.");
           console.error("Error fetching appointments:", error);
+          setError("Error fetching appointments. Please try again later.");
         });
     } else {
       setError("No email found. Please log in again.");
@@ -35,10 +42,15 @@ const ClientAppointments = () => {
 
   const formatDate = (date) => {
     const formattedDate = new Date(date);
-    return `${formattedDate.getDate()}-${formattedDate.getMonth() + 1}-${formattedDate.getFullYear()}`;
+    return `${formattedDate.getDate()}-${
+      formattedDate.getMonth() + 1
+    }-${formattedDate.getFullYear()}`;
   };
   const formatTime = (time) =>
-    new Date(`1970-01-01T${time}:00Z`).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    new Date(`1970-01-01T${time}:00Z`).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
   const getStatusMessage = (appointment) => {
     const today = new Date();
@@ -56,7 +68,10 @@ const ClientAppointments = () => {
   // Pagination logic
   const indexOfLastAppointment = currentPage * appointmentsPerPage;
   const indexOfFirstAppointment = indexOfLastAppointment - appointmentsPerPage;
-  const currentAppointments = appointments.slice(indexOfFirstAppointment, indexOfLastAppointment);
+  const currentAppointments = appointments.slice(
+    indexOfFirstAppointment,
+    indexOfLastAppointment
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -65,7 +80,9 @@ const ClientAppointments = () => {
       <Navbar />
       <hr />
       <h1 className="text-2xl mt-4 font-semibold mb-6">
-        {appointments.length > 0 ? `${appointments[0].name}'s Appointments` : "Client Appointments"}
+        {appointments.length > 0
+          ? `${appointments[0].name}'s Appointments`
+          : "Client Appointments"}
       </h1>
 
       {error && <p className="text-red-600">{error}</p>}
@@ -91,12 +108,24 @@ const ClientAppointments = () => {
 
                 return (
                   <tr key={appointment._id} className="hover:bg-gray-50">
-                    <td className="p-2 border border-gray-300 text-center">{indexOfFirstAppointment + index + 1}</td>
-                    <td className="p-2 border border-gray-300 text-center">{appointment.name}</td>
-                    <td className="p-2 border border-gray-300 text-center">{appointment.email}</td>
-                    <td className="p-2 border border-gray-300 text-center">{formatDate(appointment.preferredDate)}</td>
-                    <td className="p-2 border border-gray-300 text-center">{formatTime(appointment.preferredTime)}</td>
-                    <td className={`p-2 border border-gray-300 text-center font-semibold ${color}`}>
+                    <td className="p-2 border border-gray-300 text-center">
+                      {indexOfFirstAppointment + index + 1}
+                    </td>
+                    <td className="p-2 border border-gray-300 text-center">
+                      {appointment.name}
+                    </td>
+                    <td className="p-2 border border-gray-300 text-center">
+                      {appointment.email}
+                    </td>
+                    <td className="p-2 border border-gray-300 text-center">
+                      {formatDate(appointment.preferredDate)}
+                    </td>
+                    <td className="p-2 border border-gray-300 text-center">
+                      {formatTime(appointment.preferredTime)}
+                    </td>
+                    <td
+                      className={`p-2 border border-gray-300 text-center font-semibold ${color}`}
+                    >
                       {message}
                     </td>
                   </tr>
@@ -107,17 +136,22 @@ const ClientAppointments = () => {
 
           {/* Pagination controls */}
           <div className="flex justify-center mt-4 space-x-2">
-            {Array.from({ length: Math.ceil(appointments.length / appointmentsPerPage) }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => paginate(index + 1)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+            {Array.from(
+              { length: Math.ceil(appointments.length / appointmentsPerPage) },
+              (_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => paginate(index + 1)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
           </div>
         </div>
       )}

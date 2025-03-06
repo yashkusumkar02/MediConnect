@@ -1,7 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 
 const DiseaseInfo = () => {
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      const type = localStorage.getItem("type");
+      console.log(type);
+      
+      if (type === "client") {
+        console.log("Client logged in");
+        navigate("/Medi-Info");
+      } else {
+        navigate("/admin-details");
+      }
+    }, [navigate]);
+    
   const [disease, setDisease] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);

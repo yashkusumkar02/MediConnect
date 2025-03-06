@@ -38,80 +38,65 @@ export const MediConnect = () => {
           </Link>
         </section>
 
-        <section id="features" className="max-w-5xl w-full mb-12">
-          <h2 className="text-3xl text-green-500 text-center mb-6">
+        <section id="features" className="max-w-5xl w-full mb-12 px-4">
+          <h2 className="text-3xl md:text-4xl text-green-500 text-center mb-6">
             Features of MediConnect 🚀
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-700">
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">
-                1. Hospital Search
-              </h3>
-              <p className="text-center">
-                Easily search and find hospitals or clinics near you based on
-                location, specialties, or ratings.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">
-                2. Appointment Booking
-              </h3>
-              <p className="text-center">
-                Book appointments with healthcare professionals instantly, with
-                a choice of available time slots.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">
-                3. Online Consultations
-              </h3>
-              <p className="text-center">
-                Access online consultations with doctors via video or chat for
-                non-emergency health issues.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">4. Health Tips</h3>
-              <p className="text-center">
-                Get personalized health tips and recommendations based on your
-                health data and preferences.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">
-                5. Patient Reviews
-              </h3>
-              <p className="text-center">
-                Read reviews and ratings of hospitals, doctors, and other
-                healthcare providers to make informed decisions.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl text-green-500 mb-4">
-                6. Prescription Management
-              </h3>
-              <p className="text-center">
-                Keep track of your prescriptions and appointments directly
-                within the app, and get reminders for follow-ups.
-              </p>
-            </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-700">
+            {[
+              {
+                title: "Hospital Search",
+                text: "Easily search and find hospitals or clinics near you based on location, specialties, or ratings.",
+              },
+              {
+                title: "Appointment Booking",
+                text: "Book appointments with healthcare professionals instantly, with a choice of available time slots.",
+              },
+              {
+                title: "Online Consultations",
+                text: "Access online consultations with doctors via video or chat for non-emergency health issues.",
+              },
+              {
+                title: "Health Tips",
+                text: "Get personalized health tips and recommendations based on your health data and preferences.",
+              },
+              {
+                title: "Patient Reviews",
+                text: "Read reviews and ratings of hospitals, doctors, and other healthcare providers to make informed decisions.",
+              },
+              {
+                title: "Prescription Management",
+                text: "Keep track of your prescriptions and appointments within the app, and get reminders for follow-ups.",
+              },
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow-md text-center"
+              >
+                <h3 className="text-lg sm:text-xl text-green-500 mb-3">
+                  {index + 1}. {feature.title}
+                </h3>
+                <p className="text-sm sm:text-base">{feature.text}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section
           id="routes-learning"
-          className="max-w-5xl mx-auto mt-16 my-8 px-4 sm:px-6 lg:px-8"
+          className="max-w-5xl mx-auto mt-12 px-4 sm:px-6 lg:px-8"
         >
-          <h2 className="text-4xl text-green-600 font-bold text-center mb-8">
+          <h2 className="text-3xl sm:text-4xl text-green-600 font-bold text-center mb-6 sm:mb-8">
             Client & Hospital Functionalities 🔍
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Client Functionalities */}
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <h3 className="text-2xl font-semibold text-green-600 mb-4">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow hover:shadow-lg transition">
+              <h3 className="text-xl sm:text-2xl font-semibold text-green-600 mb-3 sm:mb-4">
                 Client
               </h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-2">
+              <ul className="list-disc list-inside text-gray-700 space-y-2 text-sm sm:text-base">
                 <li>Register and create an account.</li>
                 <li>Login to access the platform.</li>
                 <li>Search for hospitals or clinics nearby.</li>
@@ -125,16 +110,14 @@ export const MediConnect = () => {
             </div>
 
             {/* Hospital Functionalities */}
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <h3 className="text-2xl font-semibold text-green-600 mb-4">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow hover:shadow-lg transition">
+              <h3 className="text-xl sm:text-2xl font-semibold text-green-600 mb-3 sm:mb-4">
                 Hospital
               </h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-2">
+              <ul className="list-disc list-inside text-gray-700 space-y-2 text-sm sm:text-base">
                 <li>Register and set up a hospital profile.</li>
                 <li>Login to the hospital management dashboard.</li>
-                <li>
-                  List available doctors with specialization and availability.
-                </li>
+                <li>List available doctors with specialization and availability.</li>
                 <li>Manage appointments with clients.</li>
                 <li>Approve or cancel client appointments.</li>
                 <li>Send notifications to clients for updates or changes.</li>
@@ -145,122 +128,41 @@ export const MediConnect = () => {
             </div>
           </div>
 
-          <h2 className="text-4xl text-green-600 font-bold text-center mt-16 mb-8">
+          <h2 className="text-3xl sm:text-4xl text-green-600 font-bold text-center mt-12 sm:mt-16 mb-6 sm:mb-8">
             What I Learned 📚
           </h2>
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <ul className="list-none list-inside text-gray-700 space-y-2">
-              <li>
-                ✅ Implementing role-based JWT authentication and authorization.
-              </li>
-              <li>
-                ✅ Managing secure user registrations and logins with encrypted
-                passwords.
-              </li>
-              <li>
-                ✅ Developing a robust appointment booking system with React and
-                Node.js.
-              </li>
-              <li>
-                ✅ Integrating MongoDB for dynamic data storage and retrieval.
-              </li>
-              <li>
-                ✅ Building RESTful APIs for CRUD operations on appointments and
-                users.
-              </li>
-              <li>
-                ✅ Implementing email verification for user authentication and
-                password resets.
-              </li>
-              <li>
-                ✅ Managing secure sessions and token-based authentication.
-              </li>
-              <li>
-                ✅ Handling client-side routing with React Router for smooth
-                navigation.
-              </li>
-              <li>
-                ✅ Using Tailwind CSS for responsive and modern UI designs.
-              </li>
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow hover:shadow-lg transition">
+            <ul className="list-none text-gray-700 space-y-2 text-sm sm:text-base">
+              <li>✅ Implementing role-based JWT authentication and authorization.</li>
+              <li>✅ Managing secure user registrations and logins with encrypted passwords.</li>
+              <li>✅ Developing a robust appointment booking system with React and Node.js.</li>
+              <li>✅ Integrating MongoDB for dynamic data storage and retrieval.</li>
+              <li>✅ Building RESTful APIs for CRUD operations on appointments and users.</li>
+              <li>✅ Implementing email verification for user authentication and password resets.</li>
+              <li>✅ Managing secure sessions and token-based authentication.</li>
+              <li>✅ Handling client-side routing with React Router for smooth navigation.</li>
+              <li>✅ Using Tailwind CSS for responsive and modern UI designs.</li>
             </ul>
+          </div>
 
-            {/* Additional GitHub Information */}
-            <div className="mt-8 bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <h3 className="text-2xl font-semibold text-green-600 mb-4">
-                Access the Project Code
-              </h3>
-              <p className="text-gray-700">
-                You can access the full project code on GitHub. This project
-                showcases the complete functionality of a hospital-client
-                appointment booking system, built using the MERN stack (MongoDB,
-                Express, React, Node.js).
-              </p>
-              <p className="mt-4 text-blue-600">
-                <a
-                  href="https://github.com/Kusumkar-Deeepak/MediConnect-"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                >
-                  View Project Code on GitHub
-                </a>
-              </p>
-              <ul className="list-disc list-inside text-gray-700 space-y-2 mt-4">
-                <li>
-                  ✅ Clone the repository using:{" "}
-                  <code>
-                    git clone https://github.com/Kusumkar-Deeepak/MediConnect-
-                  </code>
-                </li>
-                <li>
-                  ✅ Install dependencies with: <code>npm install</code>
-                </li>
-                <li>
-                  ✅ Run the development server using: <code>npm start</code>
-                </li>
-                <li>
-                  ✅ For backend, navigate to the backend folder and run{" "}
-                  <code>npm run dev</code> for server start.
-                </li>
-              </ul>
-
-              <h3 className="text-2xl font-semibold text-green-600 mt-6 mb-4">
-                Contribute to the Project
-              </h3>
-              <p className="text-gray-700">
-                Feel free to contribute to this project! Contributions, bug
-                reports, and feature requests are welcome. Follow the steps
-                below to get started:
-              </p>
-              <ol className="list-decimal list-inside text-gray-700 space-y-2 mt-4">
-                <li>Fork the repository.</li>
-                <li>Clone your forked repository to your local machine.</li>
-                <li>Create a new branch for your feature or bug fix.</li>
-                <li>
-                  Make your changes and commit them with descriptive messages.
-                </li>
-                <li>Push your changes to your forked repository.</li>
-                <li>Open a pull request to the main repository.</li>
-              </ol>
-
-              <h3 className="text-2xl font-semibold text-green-600 mt-6 mb-4">
-                Additional Notes
-              </h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-2">
-                <li>
-                  🔧 This project is continuously updated, so make sure to check
-                  for updates regularly.
-                </li>
-                <li>
-                  🔍 Feel free to explore the codebase, report issues, or
-                  suggest improvements!
-                </li>
-                <li>
-                  📝 For detailed documentation, refer to the{" "}
-                  <code>README.md</code> file in the GitHub repository.
-                </li>
-              </ul>
-            </div>
+          <div className="mt-8 bg-white p-4 sm:p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 className="text-xl sm:text-2xl font-semibold text-green-600 mb-3 sm:mb-4">
+              Access the Project Code
+            </h3>
+            <p className="text-gray-700 text-sm sm:text-base">
+              You can access the full project code on GitHub. This project showcases the complete
+              functionality of a hospital-client appointment booking system, built using the MERN stack.
+            </p>
+            <p className="mt-3 text-blue-600 text-sm sm:text-base">
+              <a
+                href="https://github.com/yashkusumkar02"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                View Project Code on GitHub
+              </a>
+            </p>
           </div>
         </section>
 
@@ -309,7 +211,7 @@ export const MediConnect = () => {
             About the Developer 🚀
           </h2>
           <p className="text-lg text-gray-700 mb-6">
-            Hello! I’m Deepak Prakash Kusumkar, the developer behind
+            Hello! I’m Suyash Prakash Kusumkar, the developer behind
             MediConnect. I’m a passionate web developer with a keen interest in
             creating innovative solutions to improve healthcare. MediConnect is
             a product of my dedication to using technology for the betterment of
@@ -321,18 +223,18 @@ export const MediConnect = () => {
           <ul className="text-lg text-gray-700">
             <li className="mb-2">
               <a
-                href="https://github.com/DeepakKusumkar"
+                href="https://github.com/yashkusumkar02"
                 className="hover:text-pink-400"
               >
-                GitHub: Deepak Kusumkar
+                GitHub: Suyash Kusumkar
               </a>
             </li>
             <li className="mb-2">
               <a
-                href="https://www.linkedin.com/in/deepak-kusumkar/"
+                href="https://www.linkedin.com/in/suyash-kusumkar/"
                 className="hover:text-pink-400"
               >
-                LinkedIn: Deepak Kusumkar
+                LinkedIn: Suyash Kusumkar
               </a>
             </li>
           </ul>
@@ -349,10 +251,10 @@ export const MediConnect = () => {
           <ul className="text-lg text-gray-700">
             <li className="mb-2">
               <span className="font-semibold">Email:</span>{" "}
-              deeepak.kusumkar@gmail.com
+              kusumkarsuyash1234@gmail.com
             </li>
             <li className="mb-2">
-              <span className="font-semibold">Phone:</span> +91 9370387851
+              <span className="font-semibold">Phone:</span> +91 8329744862
             </li>
           </ul>
         </section>

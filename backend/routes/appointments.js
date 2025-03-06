@@ -153,7 +153,7 @@ router.put('/update', async (req, res) => {
 // Route to fetch all appointments for a client using their email
 router.post('/client-appointments', async (req, res) => {
   const { email } = req.body;
-
+  console.log('hii guyss')
   if (!email) {
     console.log("Request missing email query parameter.");
     return res.status(400).json({ message: "Email is required" });
@@ -170,8 +170,9 @@ router.post('/client-appointments', async (req, res) => {
     // Log whether a hospital document was found
     if (!hospital) {
       console.log(`No hospital found with any appointments for email: ${email}`);
-      return res.status(404).json({ message: "No appointments found for this email" });
+      return res.status(200).json([]);  // Return an empty array instead of 404
     }
+    
 
     console.log(`Hospital found: ${hospital.hospitalId} with appointments array length: ${hospital.appointments.length}`);
 

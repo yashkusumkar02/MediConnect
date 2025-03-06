@@ -1,7 +1,7 @@
+import Navbar from "./Navbar";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
-import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const AppointmentList = () => {
@@ -10,24 +10,30 @@ const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const appointmentsPerPage = 10;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-
     const type = localStorage.getItem("type");
-    if ( type==="client") {
+    console.log(type);
+
+    // Check if already on the correct page before redirecting
+    if (type === "client" && location.pathname !== "/main") {
       console.log("Client logged in");
-      window.location.href = "/main";
+      navigate("/main");
+    } else if (type === "hospital" && hospitalId && location.pathname !== `/check-clients/${hospitalId}`) {
+      navigate(`/check-clients/${hospitalId}`);
     }
+  }, [hospitalId, navigate, location.pathname]); // Added dependencies to avoid re-execution
+
+  console.log('hosID', hospitalId)
+  useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(
-          // `http://localhost:3000/api/appointments/${hospitalId}`
-          `${import.meta.env.VITE_API_BASE_URL_APPOINTMENT}/${hospitalId}`
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL_APPOINTMENT}/${hospitalId}`);
 
-        );
-        
         // Filter and sort appointments
-        const today = new Date().setHours(0, 0, 0, 0); // Get today's date at midnight
+        const today = new Date().setHours(0, 0, 0, 0);
         const filteredAppointments = response.data
           .filter((appt) => new Date(appt.preferredDate).getTime() >= today)
           .sort((a, b) => new Date(a.preferredDate) - new Date(b.preferredDate))
@@ -51,13 +57,14 @@ const AppointmentList = () => {
     try {
       await axios.put(
         // `http://localhost:3000/api/appointments/update`
-        `${import.meta.env.VITE_API_BASE_URL_APPOINTMENT}/update`
+        `${import.meta.env.VITE_API_BASE_URL_APPOINTMENT}/update`,
 
-        , {
-        hospitalId,
-        appointmentId,
-        visited: status,
-      });
+        {
+          hospitalId,
+          appointmentId,
+          visited: status,
+        }
+      );
 
       setAppointments((prevAppointments) =>
         prevAppointments.map((appt) =>
@@ -94,9 +101,18 @@ const AppointmentList = () => {
         <div className="mb-4 p-4 bg-gray-100 rounded shadow-md">
           <h3 className="text-lg font-semibold">Hospital Admin Guidelines</h3>
           <ul className="list-none pl-6 space-y-2">
-            <li>Verify patient details carefully before confirming their appointment status.</li>
-            <li>Mark appointments as <b>Visited</b> or <b>Not Visited</b> only after consultation completion.</li>
-            <li>Ensure all data is accurate and regularly updated to maintain patient confidentiality.</li>
+            <li>
+              Verify patient details carefully before confirming their
+              appointment status.
+            </li>
+            <li>
+              Mark appointments as <b>Visited</b> or <b>Not Visited</b> only
+              after consultation completion.
+            </li>
+            <li>
+              Ensure all data is accurate and regularly updated to maintain
+              patient confidentiality.
+            </li>
           </ul>
         </div>
 
@@ -108,23 +124,40 @@ const AppointmentList = () => {
                 <th className="p-2 border text-xs sm:text-base">Name</th>
                 <th className="p-2 border text-xs sm:text-base">Email</th>
                 <th className="p-2 border text-xs sm:text-base">Phone</th>
-                <th className="p-2 border text-xs sm:text-base">Preferred Date</th>
-                <th className="p-2 border text-xs sm:text-base">Preferred Time</th>
+                <th className="p-2 border text-xs sm:text-base">
+                  Preferred Date
+                </th>
+                <th className="p-2 border text-xs sm:text-base">
+                  Preferred Time
+                </th>
                 <th className="p-2 border text-xs sm:text-base">Visited</th>
               </tr>
             </thead>
             <tbody>
               {currentAppointments.length > 0 ? (
                 currentAppointments.map((appt, index) => (
-                  <tr key={appt._id} className="text-center border-b hover:bg-gray-100">
-                    <td className="p-2 border text-sm sm:text-base">{indexOfFirstAppointment + index + 1}</td>
-                    <td className="p-2 border text-sm sm:text-base">{appt.name}</td>
-                    <td className="p-2 border text-sm sm:text-base">{appt.email}</td>
-                    <td className="p-2 border text-sm sm:text-base">{appt.phone}</td>
+                  <tr
+                    key={appt._id}
+                    className="text-center border-b hover:bg-gray-100"
+                  >
+                    <td className="p-2 border text-sm sm:text-base">
+                      {indexOfFirstAppointment + index + 1}
+                    </td>
+                    <td className="p-2 border text-sm sm:text-base">
+                      {appt.name}
+                    </td>
+                    <td className="p-2 border text-sm sm:text-base">
+                      {appt.email}
+                    </td>
+                    <td className="p-2 border text-sm sm:text-base">
+                      {appt.phone}
+                    </td>
                     <td className="p-2 border text-sm sm:text-base">
                       {new Date(appt.preferredDate).toLocaleDateString("en-GB")}
                     </td>
-                    <td className="p-2 border text-sm sm:text-base">{appt.preferredTime}</td>
+                    <td className="p-2 border text-sm sm:text-base">
+                      {appt.preferredTime}
+                    </td>
                     <td className="p-2 border text-sm sm:text-base">
                       {appt.visited === null ? (
                         <>
@@ -162,7 +195,10 @@ const AppointmentList = () => {
 
         {/* Pagination */}
         <div className="flex justify-center mt-4">
-          {Array.from({ length: Math.ceil(appointments.length / appointmentsPerPage) }, (_, i) => i + 1).map((page) => (
+          {Array.from(
+            { length: Math.ceil(appointments.length / appointmentsPerPage) },
+            (_, i) => i + 1
+          ).map((page) => (
             <button
               key={page}
               onClick={() => paginate(page)}

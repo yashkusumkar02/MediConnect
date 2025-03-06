@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const DoctorDetails = () => {
+
   const location = useLocation();
   const { hospital, clientInfo } = location.state || {};
   const [ratings, setRatings] = useState(0);
